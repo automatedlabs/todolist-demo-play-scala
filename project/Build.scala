@@ -12,7 +12,14 @@ object ApplicationBuild extends Build {
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      // Add your own project settings here      
+      publishTo <<= version { (v: String) =>
+        val nexus = "http://ec2-174-129-75-167.compute-1.amazonaws.com:8080/nexus/"
+        if (v.trim.endsWith("SNAPSHOT")) 
+          Some("snapshots" at nexus + "content/repositories/snapshots") 
+        else
+          Some("releases"  at nexus + "content/repositories/releases")
+      }
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
     )
 
 }
