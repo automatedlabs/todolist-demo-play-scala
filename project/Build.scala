@@ -18,7 +18,7 @@ object ApplicationBuild extends Build {
           Some("snapshots" at nexus + "content/repositories/snapshots") 
         else
           Some("releases"  at nexus + "content/repositories/releases")
-      }
+      },
       credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
     )
 
