@@ -11,7 +11,14 @@ object ApplicationBuild extends Build {
       // Add your project dependencies here,
     )
 
-    val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
+    def publishArtifact(task: TaskKey[File]) = addArtifact(artifact in (Compile, task), task in Compile)
+    
+    val buildSettings: Seq[Setting[_]] = Defaults.defaultSettings ++ Seq(
+      name := appName,
+      version := appVersion,
+      organization := "com.intel.poc",
+
+      scalaVersion := "2.9.1",
 
       publishTo <<= version { (v: String) =>
         val nexus = "http://ec2-174-129-75-167.compute-1.amazonaws.com:8080/nexus/"
@@ -21,6 +28,9 @@ object ApplicationBuild extends Build {
           Some("releases"  at nexus + "content/repositories/releases")
       },
       credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
-    )
 
+    ) ++
+    publishArtifact(dist)
+
+    val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA, settings = buildSettings)
 }
