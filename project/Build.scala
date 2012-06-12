@@ -28,9 +28,9 @@ object ApplicationBuild extends Build {
           Some("releases"  at nexus + "content/repositories/releases")
       },
       credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
-
-    ) ++
-    publishArtifact(dist)
+      
+    ) ++ 
+    addArtifact(Artifact(appName, "bundle", "zip"), dist)
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA, settings = buildSettings)
 }
