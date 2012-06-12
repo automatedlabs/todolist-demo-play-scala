@@ -16,7 +16,7 @@ object ApplicationBuild extends Build {
     val buildSettings: Seq[Setting[_]] = Defaults.defaultSettings ++ Seq(
       name := appName,
       version := appVersion,
-      organization := "com.intel.poc",
+      organization := "com.automatedlabs.demo",
 
       scalaVersion := "2.9.1",
 
