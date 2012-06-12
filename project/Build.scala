@@ -12,7 +12,7 @@ object ApplicationBuild extends Build {
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
-      addArtifact( Artifact("todolist", "zip", "zip"), distTask )
+
       publishTo <<= version { (v: String) =>
         val nexus = "http://ec2-174-129-75-167.compute-1.amazonaws.com:8080/nexus/"
         if (v.trim.endsWith("SNAPSHOT")) 
